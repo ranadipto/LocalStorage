@@ -53,11 +53,12 @@ export default function AddTodo({ todos, setTodos }) {
 
     const data = {
       name: task,
+      quantity: 1, // Initialize quantity to 1 when a task is added
     };
     const todosForAdding = [...todos, data];
     localStorage.setItem("todoList", JSON.stringify(todosForAdding));
     setTodos(todosForAdding);
-    setTask("");
+    setTask(""); // Clear the input field
   };
 
   return (
