@@ -1,3 +1,7 @@
+//simple table with crud and localstorage
+
+
+
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
