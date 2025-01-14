@@ -1,0 +1,114 @@
+//App.jsx: Manages the todos state and imports the two child components: AddTodo and GetTodos.
+AddTodo.jsx: Handles adding tasks to the todo list and updating localStorage and the state.
+GetTodos.jsx: Displays the todos and allows users to delete tasks from the list.
+
+
+<=================================================================App.jsx===========================================================================>
+
+
+import React, { useEffect, useState } from "react";
+import AddTodo from "./components/localstorage/todos/AddTodo";
+import GetTodos from "./components/localstorage/todos/GetTodos";
+
+export default function App() {
+  const [todos, setTodos] = useState([]);
+
+  const fetchAllTodos = () => {
+    const todoList = localStorage.getItem("todoList");
+
+    return todoList ? JSON.parse(todoList) : [];
+  };
+
+  useEffect(() => {
+    const allTodos = fetchAllTodos();
+    setTodos(allTodos);
+  }, []);
+
+  return (
+    <div className="w-[90%] mx-auto my-8">
+      <h1 className="text-4xl font-bold text-center">
+        Todo Application in React
+      </h1>
+
+      <AddTodo todos={todos} setTodos={setTodos} />
+
+      <GetTodos todos={todos} setTodos={setTodos} />
+    </div>
+  );
+}
+
+
+<=================================================================addTodo.jsx===========================================================================>
+
+
+import React, { useState } from "react";
+
+export default function AddTodo({ todos, setTodos }) {
+  const [task, setTask] = useState("");
+
+  const addTodo = () => {
+    if (!task || task === "") {
+      return;
+    }
+
+    const data = {
+      name: task,
+    };
+    const todosForAdding = [...todos, data];
+    localStorage.setItem("todoList", JSON.stringify(todosForAdding));
+    setTodos(todosForAdding);
+    setTask("");
+  };
+
+  return (
+    <div className="flex flex-row gap-2 justify-center items-center my-8">
+      <input
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+        className="text-gray-600 py-2 px-4 rounded-md w-[400px]"
+        type="text"
+        placeholder="Your Task"
+      />
+
+      <button
+        onClick={() => addTodo()}
+        className="py-2 px-4 rounded-md bg-blue-700"
+      >
+        Add Task
+      </button>
+    </div>
+  );
+}
+
+
+<=================================================================GetTodo.jsx===========================================================================>
+
+
+import React from "react";
+
+export default function GetTodos({ todos, setTodos }) {
+  const deleteTodo = (item) => {
+    const deletedTodos = todos.filter((todo) => todo !== item);
+
+    setTodos(deletedTodos);
+    localStorage.setItem("todoList", JSON.stringify(deletedTodos));
+  };
+  return (
+    <div className="flex flex-col gap-4 w-[70%] mx-auto justify-center text-gray-600">
+      {todos.map((task, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center bg-gray-200 py-4 px-4 rounded-md"
+        >
+          <h1>{task.name}</h1>
+          <button
+            onClick={() => deleteTodo(task)}
+            className="bg-red-600 hover:bg-red-700 px-8 py-2 text-white rounded-md"
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
