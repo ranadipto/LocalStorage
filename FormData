@@ -1,0 +1,264 @@
+//adding form data into localStorage
+
+
+
+import React, { useRef } from "react";
+import "./style.css";
+
+function LoginWithLocalStorage() {
+  const email = useRef();
+  const password = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form default behavior (page reload)
+
+    // Retrieve the existing users data from localStorage, or initialize as an empty array if no data exists
+    const storedData = JSON.parse(localStorage.getItem("usersData")) || [];
+
+    // Create a new entry
+    const newEntry = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+
+    // Add the new entry to the existing data array
+    storedData.push(newEntry);
+
+    // Store the updated data back into localStorage
+    localStorage.setItem("usersData", JSON.stringify(storedData));
+
+    // Clear the input fields after submission
+    email.current.value = "";
+    password.current.value = "";
+  };
+
+  return (
+    <div>
+      <h1>Login</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            ref={email}
+            className="form-control"
+            placeholder="Type your email here"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            ref={password}import React, { useRef } from "react";
+import "./style.css";
+
+function LoginWithLocalStorage() {
+  const email = useRef();
+  const password = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form default behavior (page reload)
+
+    // Retrieve the existing users data from localStorage, or initialize as an empty array if no data exists
+    const storedData = JSON.parse(localStorage.getItem("usersData")) || [];
+
+    // Create a new entry
+    const newEntry = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+
+    // Add the new entry to the existing data array
+    storedData.push(newEntry);
+
+    // Store the updated data back into localStorage
+    localStorage.setItem("usersData", JSON.stringify(storedData));
+
+    // Clear the input fields after submission
+    email.current.value = "";
+    password.current.value = "";
+  };
+
+  return (
+    <div>
+      <h1>Login</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div>import React, { useRef } from "react";
+import "./style.css";
+
+function LoginWithLocalStorage() {
+  const email = useRef();
+  const password = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form default behavior (page reload)
+
+    // Retrieve the existing users data from localStorage, or initialize as an empty array if no data exists
+    const storedData = JSON.parse(localStorage.getItem("usersData")) || [];
+
+    // Create a new entry
+    const newEntry = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+
+    // Add the new entry to the existing data array
+    storedData.push(newEntry);
+
+    // Store the updated data back into localStorage
+    localStorage.setItem("usersData", JSON.stringify(storedData));
+
+    // Clear the input fields after submission
+    email.current.value = "";
+    password.current.value = "";
+  };
+
+  return (
+    <div>
+      <h1>Login</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            ref={email}
+            className="form-control"
+            placeholder="Type your email here"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            ref={password}
+            className="form-control"
+            placeholder="Type your password here"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-success">
+          Login
+        </button>
+      </form>
+
+      {/* Optionally display a message if users data has been saved */}
+      <p>Your data is being saved in localStorage.</p>
+    </div>
+  );
+}
+
+export default LoginWithLocalStorage;
+
+          <input
+            type="email"
+            ref={email}
+            className="form-control"
+            placeholder="Type your email here"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            ref={password}
+            className="form-control"
+            placeholder="Type your password here"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-success">
+          Login
+        </button>
+      </form>
+
+      {/* Optionally display a message if users data has been saved */}
+      <p>Your data is being saved in localStorage.</p>
+    </div>
+  );
+}
+
+export default LoginWithLocalStorage;
+import React, { useRef } from "react";
+import "./style.css";
+
+function LoginWithLocalStorage() {
+  const email = useRef();
+  const password = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form default behavior (page reload)
+
+    // Retrieve the existing users data from localStorage, or initialize as an empty array if no data exists
+    const storedData = JSON.parse(localStorage.getItem("usersData")) || [];
+
+    // Create a new entry
+    const newEntry = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+
+    // Add the new entry to the existing data array
+    storedData.push(newEntry);
+
+    // Store the updated data back into localStorage
+    localStorage.setItem("usersData", JSON.stringify(storedData));
+
+    // Clear the input fields after submission
+    email.current.value = "";
+    password.current.value = "";
+  };
+
+  return (
+    <div>
+      <h1>Login</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            ref={email}
+            className="form-control"
+            placeholder="Type your email here"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            ref={password}
+            className="form-control"
+            placeholder="Type your password here"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-success">
+          Login
+        </button>
+      </form>
+
+      {/* Optionally display a message if users data has been saved */}
+      <p>Your data is being saved in localStorage.</p>
+    </div>
+  );
+}
+
+export default LoginWithLocalStorage;
+
+            className="form-control"
+            placeholder="Type your password here"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-success">
+          Login
+        </button>
+      </form>
+
+      {/* Optionally display a message if users data has been saved */}
+      <p>Your data is being saved in localStorage.</p>
+    </div>
+  );
+}
+
+export default LoginWithLocalStorage;
