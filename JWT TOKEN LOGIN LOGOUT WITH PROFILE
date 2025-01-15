@@ -1,0 +1,194 @@
+//please just convert tsx to jsx if you use javascript use chatgpt
+
+<====================================================================App.tsx=====================================================================>
+import Login from "./Login";
+import Profile from "./Profile";
+
+const App = () => {
+  return (
+    <>
+      <Login />
+      <Profile />
+    </>
+  );
+};
+export default App;
+
+
+
+
+
+<====================================================================Login.tsx=====================================================================>
+import axios from "axios";
+import React, { useState } from "react";
+
+const Login: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleSubmit = () => {
+    const payload = {
+      email,
+      password,
+    };
+
+    // Log the payload for debugging
+    console.log("Sending payload:", payload);
+
+    axios
+      .post("https://api.escuelajs.co/api/v1/auth/login", payload)
+      .then((res) => {
+        console.log("Login Successful", res);
+        localStorage.setItem("token", JSON.stringify(res.data.access_token));
+        alert("Login Success");
+      })
+      .catch((err) => {
+        console.error("Login Failed", err);
+
+        if (err.response) {
+          // Log the error response from the server
+          console.error("Response Error:", err.response.data);
+          alert(
+            `Login Failed: ${err.response.data.message || "Unknown error"}`
+          );
+        } else if (err.request) {
+          // No response was received from the server
+          console.error("Request Error:", err.request);
+          alert("Login Failed: No response from server");
+        } else {
+          // Handle other types of errors
+          console.error("Error Message:", err.message);
+          alert(`Login Failed: ${err.message}`);
+        }
+      });
+  };
+
+  return (
+    <div className="container mt-5">
+      <div className="card p-4 shadow-sm">
+        <h5 className="card-title text-center mb-4">Login Page</h5>
+
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            id="email"
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            id="password"
+            className="form-control"
+          />
+        </div>
+        <button onClick={handleSubmit} className="btn btn-primary w-100">
+          Login
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+
+
+
+
+
+
+<====================================================================Profile.tsx=====================================================================>
+import axios from "axios";
+import React, { useState } from "react";
+
+// Define the type for userData
+interface UserData {
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+}
+
+const Profile: React.FC = () => {
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  const getProfileData = () => {
+    const token = JSON.parse(localStorage.getItem("token") || "null");
+
+    if (!token) {
+      alert("You are not logged in");
+      return;
+    }
+
+    const header = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .get("https://api.escuelajs.co/api/v1/auth/profile", header)
+      .then((res) => {
+        setUserData(res.data);
+        console.log("Profile data", res);
+      })
+      .catch((err) => {
+        alert("Error fetching profile data");
+        console.log("Error occured", err);
+      });
+  };
+
+  const handleLogout = () => {
+    setUserData(null);
+    localStorage.removeItem("token");
+    alert("Log out success");
+  };
+
+  return (
+    <div className="container mt-5">
+      <div className="card p-4 shadow-sm">
+        <button className="btn btn-info w-100 mb-3" onClick={getProfileData}>
+          Get Profile Data
+        </button>
+        <button className="btn btn-danger w-100 mb-3" onClick={handleLogout}>
+          Log Out
+        </button>
+
+        {userData && (
+          <div>
+            <div className="mb-3">
+              <strong>Name:</strong> {userData.name || "N/A"}
+            </div>
+            <div className="mb-3">
+              <strong>Email:</strong> {userData.email || "N/A"}changeme
+            </div>
+            <div className="mb-3">
+              <strong>Role:</strong> {userData.role || "N/A"}
+            </div>
+            <img
+              className="rounded-circle mb-3"
+              src={userData.avatar}
+              alt="Avatar"
+              style={{ width: "100px", height: "100px" }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
+
+
+
+
+
