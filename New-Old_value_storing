@@ -1,0 +1,41 @@
+//simple map to store new and old values also in local storage 
+
+
+
+import React, { useRef, useState, useEffect } from "react";
+
+function LocalStorage() {
+  const data = useRef();
+  const [storedValues, setStoredValues] = useState([]);
+
+  // Load stored values from localStorage on component mount
+  useEffect(() => {
+    const values = JSON.parse(localStorage.getItem("inputValues")) || [];
+    setStoredValues(values);
+  }, []);
+
+  const handleClick = () => {
+    const newValue = data.current.value;
+    if (newValue) {
+      const updatedValues = [...storedValues, newValue];
+      localStorage.setItem("inputValues", JSON.stringify(updatedValues));
+      setStoredValues(updatedValues); // Update state to re-render the list
+      data.current.value = ""; // Clear the input field
+    }
+  };
+
+  return (
+    <>
+      <input ref={data} />
+      <button onClick={handleClick}>Add</button>
+      <div>
+        <h3>Stored Values:</h3>
+        {storedValues.map((value, index) => (
+          <p key={index}>{value}</p>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export default LocalStorage;
